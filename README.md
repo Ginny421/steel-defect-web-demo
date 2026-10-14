@@ -42,14 +42,17 @@ pip install torch==2.7.1 torchvision==0.22.1 --index-url https://download.pytorc
 
 ### ไฟล์โมเดล
 
-ไฟล์ `best.pt` ไม่ได้อยู่ใน repo นี้ (ขนาดประมาณ 19 MB ต่อรุ่น) ให้วางที่
+ไฟล์โมเดลของ 2 รุ่นหลักอยู่ใน [Releases](https://github.com/Ginny421/steel-defect-web-demo/releases) ของ repo นี้
+(ประมาณ 19 MB ต่อรุ่น) ดาวน์โหลดและตรวจ sha256 ด้วยคำสั่ง
 
-```
-web/weights/<run_id>/best.pt
+```bash
+python download_weights.py
 ```
 
-รุ่นหลักของปุ่ม YOLO11 คือ `B5_s52` และของปุ่ม YOLOv8 คือ `V8_B5_s62`
-เช่น `web/weights/B5_s52/best.pt` รุ่นที่ไม่มีไฟล์ หรือมี sha256 ไม่ตรงกับ `research/registry.csv` จะไม่ปรากฏให้เลือก
+สคริปต์จะวางไฟล์ที่ `web/weights/B5_s52/best.pt` (ปุ่ม YOLO11) และ `web/weights/V8_B5_s62/best.pt` (ปุ่ม YOLOv8)
+และลบไฟล์ทิ้งหากรหัส sha256 ไม่ตรงกับ `research/registry.csv`
+อีก 16 รุ่นที่ใช้ในตารางเทียบเงื่อนไขไม่รวมอยู่ใน release รุ่นที่ไม่มีไฟล์จะไม่ปรากฏให้เลือก
+หากมีไฟล์ของรุ่นอื่น ให้วางที่ `web/weights/<run_id>/best.pt`
 
 ## การใช้งาน
 
@@ -80,6 +83,7 @@ max_upload_mb: 10
 ## โครงสร้าง
 
 ```
+download_weights.py   ดาวน์โหลดไฟล์โมเดลจาก Release
 web/
   app.py            เซิร์ฟเวอร์ FastAPI
   config.yaml       ค่าตั้งของเว็บ
@@ -103,6 +107,11 @@ WEB_DEMO_DEV=1 python -m pytest web/tests -q
 ```
 
 ชุดทดสอบใช้โมเดลจำลอง จึงไม่ต้องมีไฟล์ `best.pt`
+
+## ใบอนุญาตและแหล่งข้อมูล
+
+โค้ดเผยแพร่ภายใต้ GNU AGPL-3.0 (ดูไฟล์ `LICENSE`) ให้สอดคล้องกับไลบรารี Ultralytics ที่แอปเรียกใช้
+โมเดลฝึกบนชุดข้อมูล NEU-DET ผู้นำไปใช้ควรตรวจเงื่อนไขการใช้ชุดข้อมูลดังกล่าวจากผู้เผยแพร่ต้นทางด้วย
 
 ## ข้อจำกัด
 
