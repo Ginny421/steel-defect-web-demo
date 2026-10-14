@@ -1,0 +1,6 @@
+# เพิ่มจาก research/env/environment_lock.txt (ultralytics==8.4.170 ต้องตรงกับตอนฝึก)
+ultralytics==8.4.170
+fastapi==0.115.6
+uvicorn==0.32.1
+python-multipart==0.0.20
+# ทดสอบ: pytest, httpx==0.28.1

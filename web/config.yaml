@@ -1,0 +1,22 @@
+# เว็บสาธิต (B11 → A18) — ค่าที่แก้ได้มีแค่ไฟล์นี้
+# sha256 ที่ต้องตรง, policy/seed/imgsz อ่านจาก research/registry.csv และ threshold อ่านจาก
+# research/reports/thresholds_val.json ตาม run_id (ไม่พิมพ์มือ — web_demo_plan.md ข้อ 3)
+#
+# A18 (12 ต.ค.): run_id = โมเดลเดโมสุดท้ายตาม research/release/model_card.md (B5_s52) · threshold/sha256 อ่านจาก registry + thresholds_val.json
+run_id: B5_s52
+weights: web/weights/B5_s52/best.pt   # ไม่ขึ้น GitHub — ดาวน์โหลดจาก Drive (README ข้อ 1)
+temporary: false
+
+# run เดโมของแต่ละปุ่ม (policy B5 + seed ที่ Val micro F1 เป็นมัธยฐาน): YOLO11s = B5_s52 (model_card A17), YOLOv8s = V8_B5_s62
+demo_runs:
+  YOLO11s: B5_s52
+  YOLOv8s: V8_B5_s62
+
+device: cpu
+max_upload_mb: 10
+
+# โหมด "เทียบทุกเงื่อนไข": หนึ่ง run ต่อเงื่อนไข เลือกด้วยกติกาเดียวกับ demo_runs (seed ที่ micro F1 บน Validation
+# ที่ threshold ตรึงเป็นมัธยฐานของ 3 seed · ไม่ได้ใช้ Test เลือก) · run ที่ไม่มีไฟล์ใน web/weights/ จะถูกข้าม
+compare_runs:
+  YOLO11s: [B0_s42, B_default_s52, B1_s42, B2_s62, B3_s62, B4_s42, B5_s52, B6_s52, B7_s62]
+  YOLOv8s: [V8_B0_s42, V8_B_default_s52, V8_B1_s52, V8_B2_s62, V8_B3_s62, V8_B4_s42, V8_B5_s62, V8_B6_s62, V8_B7_s62]
